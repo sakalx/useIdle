@@ -24,12 +24,15 @@
     ]
   },
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "transpile": "babel src -d core --copy-files",
+    "patch": "npm version patch",
+    "minor": "npm version minor",
+    "major": "npm version major",
+    "start-dev": "webpack-dev-server --mode development",
+    "transpile-js": "babel src -d dist --copy-files",
     "build": "webpack --mode production",
-    "deploy": "gh-pages -d example/dist",
-    "publish-demo": "npm run build && npm run deploy",
-    "prepublishOnly": "npm run transpile",
+    "git-deploy": "gh-pages -d example/dist",
+    "publish-demo": "npm run build && npm run git-deploy",
+    "prepublishOnly": "npm run transpile-js",
     "publish": "npm publish"
   },
   "repository": {
