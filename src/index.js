@@ -7,21 +7,20 @@ const debounce = (callback, wait = 66) => {
         const next = () => callback(...args);
 
         clearTimeout(timeout);
-        timeout = setTimeout(next, wait);
+        timeout = window.setTimeout(next, wait);
     };
 };
 
-const useCancelIdleCallback = () => useCallback((idleId) => clearTimeout(idleId.current), []);
+export const useCancelIdleCallback = () => useCallback(idleId => window.clearTimeout(idleId.current), []);
 
-const useIdleCallback = (callback, {idleTimeout = 3000, debounceTimeout = 66} = {}) => {
-    const idleId = useRef(null)
+export const useIdleCallback = (callback, { idleTimeout = 300000, debounceTimeout = 66 } = {}) => {
+    const idleId = useRef(null);
     const cancelIdle = useCancelIdleCallback();
 
     useLayoutEffect(() => {
-
         const resetTimer = debounce(() => {
             cancelIdle(idleId);
-            idleId.current = setTimeout(callback, idleTimeout);
+            idleId.current = window.setTimeout(callback, idleTimeout);
         }, debounceTimeout);
 
         window.onclick = resetTimer;
@@ -42,4 +41,4 @@ const useIdleCallback = (callback, {idleTimeout = 3000, debounceTimeout = 66} = 
     }, []);
 
     return idleId;
-}
+};
