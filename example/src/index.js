@@ -1,14 +1,27 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import useIdle from '../../src';
+import {useIdleCallback, useCancelIdleCallback} from '../../src';
 
+const idleCallback = () => {
+  console.log('idle detected')
+};
 
 const App = () => {
-    useIdle();
+
+    const id = useIdleCallback(null, {idleTimeout: 3000});
+    const cancelIdleCallback = useCancelIdleCallback();
+
+    const cancelIdle = () => {
+        cancelIdleCallback(id)
+    };
 
     return (
-        <h1> Howdy~! </h1>
+        <main>
+            <h1> Howdy~! </h1>
+            <button onClick={cancelIdle}>cancel idle</button>
+        </main>
+
     )
 }
 
